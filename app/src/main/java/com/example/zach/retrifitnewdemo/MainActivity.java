@@ -21,23 +21,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.text);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.douban.com/v2/")
+                .baseUrl("http://rjtmobile.com/ansari/shopingcart/")
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .build();
-        RetrofitService service = retrofit.create(RetrofitService.class);
-        Call<Book> call = service.getSearchBook("金瓶梅", null, 0, 1);
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                textView.setText(response.body().getCount() + "");
+        RetrofitService2 service = retrofit.create(RetrofitService2.class);
+        Call<com.example.zach.retrifitnewdemo.Response> call = service.getData(107);
 
+        call.enqueue(new Callback<com.example.zach.retrifitnewdemo.Response>() {
+            @Override
+            public void onResponse(Call<com.example.zach.retrifitnewdemo.Response> call, Response<com.example.zach.retrifitnewdemo.Response> response) {
+                textView.setText(response.body().getSubCategory().toString());
             }
 
             @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                textView.setText(  "error");
+            public void onFailure(Call<com.example.zach.retrifitnewdemo.Response> call, Throwable t) {
+
             }
         });
+
 
 
 
